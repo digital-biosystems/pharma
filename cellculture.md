@@ -7,7 +7,6 @@
 
 <bdl-chartjs-time width="400" height="200" fromid="idfmi" labels="live,exposed,infectious,sick,susceptible" initialdata="" refindex="0" refvalues="5" responsive="true" maxdata="1024"></bdl-chartjs-time>
 
-
 </div>
 <div class="w3-third">
 
