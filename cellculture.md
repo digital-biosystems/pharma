@@ -3,7 +3,7 @@
 <div class="w3-twothird">
 
 ## Simulation
-<bdl-fmi id="idfmi" mode="oneshot" src="CellCulture.js" fminame="CellCulture" tolerance="0.000001" starttime="0" stoptime="9" fstepsize="0.1" fpslimit="60" guid="{45a4051d-4ad1-4260-bad4-eee7c618aea2}" valuereferences="21,19,20,23,24" valuelabels="cell_live,cell_exposed,cell_infectious,cell_sick,cell_susceptible" inputs="incubation,84,1,1,f;infectious,85,1,1,f;diseased,83,1,1,f;mortality,81,1,1,f;contactrate,70,1,1,f" inputlabels="t_incubation,t_infectious,t_diseased,mortality,beta"></bdl-fmi>
+<bdl-fmi id="idfmi" mode="oneshot" src="CellCulture.js" fminame="CellCulture" tolerance="0.00000000001" starttime="0" stoptime="9" fstepsize="0.03" fpslimit="60" guid="{45a4051d-4ad1-4260-bad4-eee7c618aea2}" valuereferences="21,19,20,23,24" valuelabels="cell_live,cell_exposed,cell_infectious,cell_sick,cell_susceptible" inputs="incubation,84,1,1,f;infectious,85,1,1,f;diseased,83,1,1,f;mortality,81,1,1,f;contactrate,70,1,1,f" inputlabels="t_incubation,t_infectious,t_diseased,mortality,beta"></bdl-fmi>
 
 <bdl-chartjs-time width="400" height="200" fromid="idfmi" labels="live,exposed,infectious,sick,susceptible" initialdata="" refindex="0" refvalues="5" responsive="true" maxdata="1024"></bdl-chartjs-time>
 
