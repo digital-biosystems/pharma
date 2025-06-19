@@ -1,0 +1,1783 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  fmiVersion="2.0"
+  modelName="VLAIO_ICP_models.CellCulture"
+  guid="{45a4051d-4ad1-4260-bad4-eee7c618aea2}"
+  description="Component model of cell culture exposed to viral infection"
+  version=""
+  generationTool="OpenModelica Compiler OpenModelica 1.25.1"
+  generationDateAndTime="2025-06-19T13:31:39Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="1">
+  <CoSimulation
+    modelIdentifier="CellCulture"
+    needsExecutionTool="false"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="true"
+    maxOutputDerivativeOrder="1"
+    canRunAsynchronuously = "false"
+    canBeInstantiatedOnlyOncePerProcess="false"
+    canNotUseMemoryManagementFunctions="false"
+    canGetAndSetFMUstate="false"
+    canSerializeFMUstate="false"
+    providesDirectionalDerivative="false">
+    <SourceFiles>
+      <File name="CellCulture.c" />
+      <File name="CellCulture_functions.c" />
+      <File name="CellCulture_records.c" />
+      <File name="CellCulture_01exo.c" />
+      <File name="CellCulture_02nls.c" />
+      <File name="CellCulture_03lsy.c" />
+      <File name="CellCulture_04set.c" />
+      <File name="CellCulture_05evt.c" />
+      <File name="CellCulture_06inz.c" />
+      <File name="CellCulture_07dly.c" />
+      <File name="CellCulture_08bnd.c" />
+      <File name="CellCulture_09alg.c" />
+      <File name="CellCulture_10asr.c" />
+      <File name="CellCulture_11mix.c" />
+      <File name="CellCulture_12jac.c" />
+      <File name="CellCulture_13opt.c" />
+      <File name="CellCulture_14lnz.c" />
+      <File name="CellCulture_15syn.c" />
+      <File name="CellCulture_16dae.c" />
+      <File name="CellCulture_17inl.c" />
+      <File name="CellCulture_18spd.c" />
+      <File name="CellCulture_init_fmu.c" />
+      <File name="CellCulture_FMU.c" />
+      <File name="./gc/memory_pool.c" />
+      <File name="./gc/omc_gc.c" />
+      <File name="./util/base_array.c" />
+      <File name="./util/boolean_array.c" />
+      <File name="./util/context.c" />
+      <File name="./util/division.c" />
+      <File name="./util/doubleEndedList.c" />
+      <File name="./util/generic_array.c" />
+      <File name="./util/index_spec.c" />
+      <File name="./util/integer_array.c" />
+      <File name="./util/list.c" />
+      <File name="./util/modelica_string_lit.c" />
+      <File name="./util/modelica_string.c" />
+      <File name="./util/ModelicaUtilities.c" />
+      <File name="./util/omc_error.c" />
+      <File name="./util/omc_file.c" />
+      <File name="./util/omc_init.c" />
+      <File name="./util/omc_mmap.c" />
+      <File name="./util/omc_msvc.c" />
+      <File name="./util/omc_numbers.c" />
+      <File name="./util/parallel_helper.c" />
+      <File name="./util/rational.c" />
+      <File name="./util/real_array.c" />
+      <File name="./util/ringbuffer.c" />
+      <File name="./util/simulation_options.c" />
+      <File name="./util/string_array.c" />
+      <File name="./util/utility.c" />
+      <File name="./util/varinfo.c" />
+      <File name="./math-support/pivot.c" />
+      <File name="./simulation/jacobian_util.c" />
+      <File name="./simulation/omc_simulation_util.c" />
+      <File name="./simulation/options.c" />
+      <File name="./simulation/simulation_info_json.c" />
+      <File name="./simulation/simulation_omc_assert.c" />
+      <File name="./simulation/solver/delay.c" />
+      <File name="./simulation/solver/fmi_events.c" />
+      <File name="./simulation/solver/model_help.c" />
+      <File name="./simulation/solver/omc_math.c" />
+      <File name="./simulation/solver/spatialDistribution.c" />
+      <File name="./simulation/solver/stateset.c" />
+      <File name="./simulation/solver/synchronous.c" />
+      <File name="./simulation/solver/initialization/initialization.c" />
+      <File name="./meta/meta_modelica_catch.c" />
+      <File name="simulation/solver/cvode_solver.c" />
+      <File name="simulation/solver/sundials_error.c" />
+    </SourceFiles>
+  </CoSimulation>
+  <UnitDefinitions>
+    <Unit name="s">
+      <BaseUnit s="1" />
+    </Unit>
+    <Unit name="1">
+      <BaseUnit />
+    </Unit>
+    <Unit name="1/s">
+      <BaseUnit s="-1" />
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType name="Bodylight.Types.SimulationType">
+      <Enumeration>
+        <Item name="NoInit" value="1"/>
+        <Item name="NormalInit" value="2"/>
+        <Item name="InitSteadyState" value="3"/>
+        <Item name="SteadyState" value="4"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <LogCategories>
+    <Category name="logEvents" />
+    <Category name="logSingularLinearSystems" />
+    <Category name="logNonlinearSystems" />
+    <Category name="logDynamicStateSelection" />
+    <Category name="logStatusWarning" />
+    <Category name="logStatusDiscard" />
+    <Category name="logStatusError" />
+    <Category name="logStatusFatal" />
+    <Category name="logStatusPending" />
+    <Category name="logAll" />
+    <Category name="logFmi2Call" />
+  </LogCategories>
+  <DefaultExperiment startTime="0.0" stopTime="9.0" tolerance="1e-9" stepSize="0.009"/>
+  <ModelVariables>
+  <!-- Index of variable = "1" -->
+  <ScalarVariable
+    name="Dead.state"
+    valueReference="0"
+    description="This state must be connected in inherited class definition"
+    >
+    <Real min="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "2" -->
+  <ScalarVariable
+    name="Exposed.state"
+    valueReference="1"
+    description="This state must be connected in inherited class definition"
+    >
+    <Real min="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "3" -->
+  <ScalarVariable
+    name="Infectious.state"
+    valueReference="2"
+    description="This state must be connected in inherited class definition"
+    >
+    <Real min="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "4" -->
+  <ScalarVariable
+    name="Recovered.state"
+    valueReference="3"
+    description="This state must be connected in inherited class definition"
+    >
+    <Real min="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "5" -->
+  <ScalarVariable
+    name="Sick.state"
+    valueReference="4"
+    description="This state must be connected in inherited class definition"
+    >
+    <Real min="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "6" -->
+  <ScalarVariable
+    name="Susceptible.state"
+    valueReference="5"
+    description="This state must be connected in inherited class definition"
+    >
+    <Real min="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "7" -->
+  <ScalarVariable
+    name="der(Dead.state)"
+    valueReference="6"
+    description="der(This state must be connected in inherited class definition)"
+    >
+    <Real derivative="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "8" -->
+  <ScalarVariable
+    name="der(Exposed.state)"
+    valueReference="7"
+    description="der(This state must be connected in inherited class definition)"
+    >
+    <Real derivative="2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "9" -->
+  <ScalarVariable
+    name="der(Infectious.state)"
+    valueReference="8"
+    description="der(This state must be connected in inherited class definition)"
+    >
+    <Real derivative="3"/>
+  </ScalarVariable>
+  <!-- Index of variable = "10" -->
+  <ScalarVariable
+    name="der(Recovered.state)"
+    valueReference="9"
+    description="der(This state must be connected in inherited class definition)"
+    >
+    <Real derivative="4"/>
+  </ScalarVariable>
+  <!-- Index of variable = "11" -->
+  <ScalarVariable
+    name="der(Sick.state)"
+    valueReference="10"
+    description="der(This state must be connected in inherited class definition)"
+    >
+    <Real derivative="5"/>
+  </ScalarVariable>
+  <!-- Index of variable = "12" -->
+  <ScalarVariable
+    name="der(Susceptible.state)"
+    valueReference="11"
+    description="der(This state must be connected in inherited class definition)"
+    >
+    <Real derivative="6"/>
+  </ScalarVariable>
+  <!-- Index of variable = "13" -->
+  <ScalarVariable
+    name="Dead.change"
+    valueReference="12"
+    description="Dynamic change of state value per minute"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "14" -->
+  <ScalarVariable
+    name="Exposed.change"
+    valueReference="13"
+    description="Dynamic change of state value per minute"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "15" -->
+  <ScalarVariable
+    name="Infectious.change"
+    valueReference="14"
+    description="Dynamic change of state value per minute"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "16" -->
+  <ScalarVariable
+    name="Recovered.change"
+    valueReference="15"
+    description="Dynamic change of state value per minute"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "17" -->
+  <ScalarVariable
+    name="Sick.change"
+    valueReference="16"
+    description="Dynamic change of state value per minute"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "18" -->
+  <ScalarVariable
+    name="Susceptible.change"
+    valueReference="17"
+    description="Dynamic change of state value per minute"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "19" -->
+  <ScalarVariable
+    name="cell_dead"
+    valueReference="18"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "20" -->
+  <ScalarVariable
+    name="cell_exposed"
+    valueReference="19"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "21" -->
+  <ScalarVariable
+    name="cell_infectious"
+    valueReference="20"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "22" -->
+  <ScalarVariable
+    name="cell_live"
+    valueReference="21"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "23" -->
+  <ScalarVariable
+    name="cell_recovered"
+    valueReference="22"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "24" -->
+  <ScalarVariable
+    name="cell_sick"
+    valueReference="23"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "25" -->
+  <ScalarVariable
+    name="cell_susceptible"
+    valueReference="24"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "26" -->
+  <ScalarVariable
+    name="exposure.changePerPopulationMember"
+    valueReference="25"
+    description="Current population change per individual"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "27" -->
+  <ScalarVariable
+    name="illness.changePerPopulationMember"
+    valueReference="26"
+    description="Current population change per individual"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "28" -->
+  <ScalarVariable
+    name="illness.limitedChange"
+    valueReference="27"
+    description="Already limited flow"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "29" -->
+  <ScalarVariable
+    name="illness.port_a.change"
+    valueReference="28"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "30" -->
+  <ScalarVariable
+    name="incubation.changePerPopulationMember"
+    valueReference="29"
+    description="Current population change per individual"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "31" -->
+  <ScalarVariable
+    name="incubation.limitedChange"
+    valueReference="30"
+    description="Already limited flow"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "32" -->
+  <ScalarVariable
+    name="latent.changePerPopulationMember"
+    valueReference="31"
+    description="Current population change per individual"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "33" -->
+  <ScalarVariable
+    name="latent.port_a.change"
+    valueReference="32"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "34" -->
+  <ScalarVariable
+    name="Dead.NominalPopulation"
+    valueReference="33"
+    description="Numerical scale. Default is 1, but for huge amount of cells it should be any number in the appropriate numerical order of typical amount."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "35" -->
+  <ScalarVariable
+    name="Dead.NominalPopulationChange"
+    valueReference="34"
+    description="Numerical scale. Default change is 1 individual per day, but for much faster or much slower chnages should be different."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.1574074074074073e-5" unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "36" -->
+  <ScalarVariable
+    name="Dead.defaultValue"
+    valueReference="35"
+    description="Default value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "37" -->
+  <ScalarVariable
+    name="Dead.initialValue"
+    valueReference="36"
+    description="Initial value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "38" -->
+  <ScalarVariable
+    name="Dead.population_start"
+    valueReference="37"
+    description="Initial population size in compartment"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1e-8" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "39" -->
+  <ScalarVariable
+    name="Dead.state_start"
+    valueReference="38"
+    description="State start or init value"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "40" -->
+  <ScalarVariable
+    name="Exposed.NominalPopulation"
+    valueReference="39"
+    description="Numerical scale. Default is 1, but for huge amount of cells it should be any number in the appropriate numerical order of typical amount."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "41" -->
+  <ScalarVariable
+    name="Exposed.NominalPopulationChange"
+    valueReference="40"
+    description="Numerical scale. Default change is 1 individual per day, but for much faster or much slower chnages should be different."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.1574074074074073e-5" unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "42" -->
+  <ScalarVariable
+    name="Exposed.defaultValue"
+    valueReference="41"
+    description="Default value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "43" -->
+  <ScalarVariable
+    name="Exposed.initialValue"
+    valueReference="42"
+    description="Initial value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "44" -->
+  <ScalarVariable
+    name="Exposed.population_start"
+    valueReference="43"
+    description="Initial population size in compartment"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1e-8" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "45" -->
+  <ScalarVariable
+    name="Exposed.state_start"
+    valueReference="44"
+    description="State start or init value"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "46" -->
+  <ScalarVariable
+    name="Infectious.NominalPopulation"
+    valueReference="45"
+    description="Numerical scale. Default is 1, but for huge amount of cells it should be any number in the appropriate numerical order of typical amount."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "47" -->
+  <ScalarVariable
+    name="Infectious.NominalPopulationChange"
+    valueReference="46"
+    description="Numerical scale. Default change is 1 individual per day, but for much faster or much slower chnages should be different."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.1574074074074073e-5" unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "48" -->
+  <ScalarVariable
+    name="Infectious.defaultValue"
+    valueReference="47"
+    description="Default value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "49" -->
+  <ScalarVariable
+    name="Infectious.initialValue"
+    valueReference="48"
+    description="Initial value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "50" -->
+  <ScalarVariable
+    name="Infectious.population_start"
+    valueReference="49"
+    description="Initial population size in compartment"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1e-4" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "51" -->
+  <ScalarVariable
+    name="Infectious.state_start"
+    valueReference="50"
+    description="State start or init value"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "52" -->
+  <ScalarVariable
+    name="Recovered.NominalPopulation"
+    valueReference="51"
+    description="Numerical scale. Default is 1, but for huge amount of cells it should be any number in the appropriate numerical order of typical amount."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "53" -->
+  <ScalarVariable
+    name="Recovered.NominalPopulationChange"
+    valueReference="52"
+    description="Numerical scale. Default change is 1 individual per day, but for much faster or much slower chnages should be different."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.1574074074074073e-5" unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "54" -->
+  <ScalarVariable
+    name="Recovered.defaultValue"
+    valueReference="53"
+    description="Default value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "55" -->
+  <ScalarVariable
+    name="Recovered.initialValue"
+    valueReference="54"
+    description="Initial value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "56" -->
+  <ScalarVariable
+    name="Recovered.population_start"
+    valueReference="55"
+    description="Initial population size in compartment"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1e-8" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "57" -->
+  <ScalarVariable
+    name="Recovered.state_start"
+    valueReference="56"
+    description="State start or init value"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "58" -->
+  <ScalarVariable
+    name="Sick.NominalPopulation"
+    valueReference="57"
+    description="Numerical scale. Default is 1, but for huge amount of cells it should be any number in the appropriate numerical order of typical amount."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "59" -->
+  <ScalarVariable
+    name="Sick.NominalPopulationChange"
+    valueReference="58"
+    description="Numerical scale. Default change is 1 individual per day, but for much faster or much slower chnages should be different."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.1574074074074073e-5" unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "60" -->
+  <ScalarVariable
+    name="Sick.defaultValue"
+    valueReference="59"
+    description="Default value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "61" -->
+  <ScalarVariable
+    name="Sick.initialValue"
+    valueReference="60"
+    description="Initial value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "62" -->
+  <ScalarVariable
+    name="Sick.population_start"
+    valueReference="61"
+    description="Initial population size in compartment"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1e-8" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "63" -->
+  <ScalarVariable
+    name="Sick.state_start"
+    valueReference="62"
+    description="State start or init value"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "64" -->
+  <ScalarVariable
+    name="Susceptible.NominalPopulation"
+    valueReference="63"
+    description="Numerical scale. Default is 1, but for huge amount of cells it should be any number in the appropriate numerical order of typical amount."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "65" -->
+  <ScalarVariable
+    name="Susceptible.NominalPopulationChange"
+    valueReference="64"
+    description="Numerical scale. Default change is 1 individual per day, but for much faster or much slower chnages should be different."
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.1574074074074073e-5" unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "66" -->
+  <ScalarVariable
+    name="Susceptible.defaultValue"
+    valueReference="65"
+    description="Default value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "67" -->
+  <ScalarVariable
+    name="Susceptible.initialValue"
+    valueReference="66"
+    description="Initial value of state."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "68" -->
+  <ScalarVariable
+    name="Susceptible.population_start"
+    valueReference="67"
+    description="Initial population size in compartment"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "69" -->
+  <ScalarVariable
+    name="Susceptible.state_start"
+    valueReference="68"
+    description="State start or init value"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "70" -->
+  <ScalarVariable
+    name="alpha"
+    valueReference="69"
+    description="inverse of the incubation period"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "71" -->
+  <ScalarVariable
+    name="beta"
+    valueReference="70"
+    description="average contact rate"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="10.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "72" -->
+  <ScalarVariable
+    name="cell_number"
+    valueReference="71"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="100.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "73" -->
+  <ScalarVariable
+    name="exposure.LifeTime"
+    valueReference="72"
+    description="Mean life time for population (=1.44*halftime) if useChangePerMember=false"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1e-8" nominal="60.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "74" -->
+  <ScalarVariable
+    name="gain.k"
+    valueReference="73"
+    description="Gain value multiplied with input signal"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "75" -->
+  <ScalarVariable
+    name="gamma"
+    valueReference="74"
+    description="inverse of the mean infectious period"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "76" -->
+  <ScalarVariable
+    name="illness.LifeTime"
+    valueReference="75"
+    description="Mean life time for population (=1.44*halftime) if useChangePerMember=false"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real nominal="60.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "77" -->
+  <ScalarVariable
+    name="illness.limitFlow_max"
+    valueReference="76"
+    description="Maximal flow limitation"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1e60" unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "78" -->
+  <ScalarVariable
+    name="illness.ratios[1]"
+    valueReference="77"
+    description="division of flows. The last one is given automatically, so that it sums up to one"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real nominal="0.01" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "79" -->
+  <ScalarVariable
+    name="incubation.LifeTime"
+    valueReference="78"
+    description="Mean life time for population (=1.44*halftime) if useChangePerMember=false"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real nominal="60.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "80" -->
+  <ScalarVariable
+    name="incubation.limitFlow_max"
+    valueReference="79"
+    description="Maximal flow limitation"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1e60" unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "81" -->
+  <ScalarVariable
+    name="latent.LifeTime"
+    valueReference="80"
+    description="Mean life time for population (=1.44*halftime) if useChangePerMember=false"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real nominal="60.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "82" -->
+  <ScalarVariable
+    name="mortality"
+    valueReference="81"
+    description="Mortality of severe cases, which are left untreated"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="0.8" nominal="0.01" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "83" -->
+  <ScalarVariable
+    name="recoverability"
+    valueReference="82"
+    description="Mortality of severe cases, which are left untreated"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Real nominal="0.01" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "84" -->
+  <ScalarVariable
+    name="t_diseased"
+    valueReference="83"
+    description="average days in sick stage"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="0.5"/>
+  </ScalarVariable>
+  <!-- Index of variable = "85" -->
+  <ScalarVariable
+    name="t_incubation"
+    valueReference="84"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "86" -->
+  <ScalarVariable
+    name="t_infectious"
+    valueReference="85"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "87" -->
+  <ScalarVariable
+    name="Dead.population"
+    valueReference="0"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "88" -->
+  <ScalarVariable
+    name="Dead.port.change"
+    valueReference="12"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "89" -->
+  <ScalarVariable
+    name="Dead.port.population"
+    valueReference="0"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "90" -->
+  <ScalarVariable
+    name="Exposed.population"
+    valueReference="1"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "91" -->
+  <ScalarVariable
+    name="Exposed.port.change"
+    valueReference="13"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "92" -->
+  <ScalarVariable
+    name="Exposed.port.population"
+    valueReference="1"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "93" -->
+  <ScalarVariable
+    name="Infectious.population"
+    valueReference="2"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "94" -->
+  <ScalarVariable
+    name="Infectious.port.change"
+    valueReference="14"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "95" -->
+  <ScalarVariable
+    name="Infectious.port.population"
+    valueReference="2"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "96" -->
+  <ScalarVariable
+    name="Recovered.population"
+    valueReference="3"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "97" -->
+  <ScalarVariable
+    name="Recovered.port.change"
+    valueReference="15"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "98" -->
+  <ScalarVariable
+    name="Recovered.port.population"
+    valueReference="3"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "99" -->
+  <ScalarVariable
+    name="Sick.population"
+    valueReference="4"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "100" -->
+  <ScalarVariable
+    name="Sick.port.change"
+    valueReference="16"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "101" -->
+  <ScalarVariable
+    name="Sick.port.population"
+    valueReference="4"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "102" -->
+  <ScalarVariable
+    name="Susceptible.population"
+    valueReference="5"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "103" -->
+  <ScalarVariable
+    name="Susceptible.port.change"
+    valueReference="17"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "104" -->
+  <ScalarVariable
+    name="Susceptible.port.population"
+    valueReference="5"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "105" -->
+  <ScalarVariable
+    name="exposure.changePerMember"
+    valueReference="25"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "106" -->
+  <ScalarVariable
+    name="exposure.port_a.change"
+    valueReference="105"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "107" -->
+  <ScalarVariable
+    name="exposure.port_a.population"
+    valueReference="5"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "108" -->
+  <ScalarVariable
+    name="exposure.port_b.change"
+    valueReference="17"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "109" -->
+  <ScalarVariable
+    name="exposure.port_b.population"
+    valueReference="1"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "110" -->
+  <ScalarVariable
+    name="gain.u"
+    valueReference="2"
+    description="Input signal connector"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "111" -->
+  <ScalarVariable
+    name="gain.y"
+    valueReference="25"
+    description="Output signal connector"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "112" -->
+  <ScalarVariable
+    name="illness.port_a.population"
+    valueReference="4"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "113" -->
+  <ScalarVariable
+    name="illness.port_b[1].change"
+    valueReference="112"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "114" -->
+  <ScalarVariable
+    name="illness.port_b[2].change"
+    valueReference="113"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "115" -->
+  <ScalarVariable
+    name="illness.port_b[1].population"
+    valueReference="3"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "116" -->
+  <ScalarVariable
+    name="illness.port_b[2].population"
+    valueReference="0"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "117" -->
+  <ScalarVariable
+    name="incubation.port_a.change"
+    valueReference="30"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "118" -->
+  <ScalarVariable
+    name="incubation.port_a.population"
+    valueReference="2"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "119" -->
+  <ScalarVariable
+    name="incubation.port_b[1].change"
+    valueReference="118"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "120" -->
+  <ScalarVariable
+    name="incubation.port_b[1].population"
+    valueReference="4"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "121" -->
+  <ScalarVariable
+    name="latent.port_a.population"
+    valueReference="1"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "122" -->
+  <ScalarVariable
+    name="latent.port_b.change"
+    valueReference="121"
+    description="Average population change = change of population individuals"
+    >
+    <Real unit="1/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "123" -->
+  <ScalarVariable
+    name="latent.port_b.population"
+    valueReference="2"
+    description="Average number of population individuals"
+    >
+    <Real min="0.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "124" -->
+  <ScalarVariable
+    name="Dead.Simulation"
+    valueReference="0"
+    description="Dynamic with Initialization or Steady State"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="Bodylight.Types.SimulationType"/>
+  </ScalarVariable>
+  <!-- Index of variable = "125" -->
+  <ScalarVariable
+    name="Exposed.Simulation"
+    valueReference="1"
+    description="Dynamic with Initialization or Steady State"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="Bodylight.Types.SimulationType"/>
+  </ScalarVariable>
+  <!-- Index of variable = "126" -->
+  <ScalarVariable
+    name="Infectious.Simulation"
+    valueReference="2"
+    description="Dynamic with Initialization or Steady State"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="Bodylight.Types.SimulationType"/>
+  </ScalarVariable>
+  <!-- Index of variable = "127" -->
+  <ScalarVariable
+    name="Recovered.Simulation"
+    valueReference="3"
+    description="Dynamic with Initialization or Steady State"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="Bodylight.Types.SimulationType"/>
+  </ScalarVariable>
+  <!-- Index of variable = "128" -->
+  <ScalarVariable
+    name="Sick.Simulation"
+    valueReference="4"
+    description="Dynamic with Initialization or Steady State"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="Bodylight.Types.SimulationType"/>
+  </ScalarVariable>
+  <!-- Index of variable = "129" -->
+  <ScalarVariable
+    name="Susceptible.Simulation"
+    valueReference="5"
+    description="Dynamic with Initialization or Steady State"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="Bodylight.Types.SimulationType"/>
+  </ScalarVariable>
+  <!-- Index of variable = "130" -->
+  <ScalarVariable
+    name="illness.num_outflows"
+    valueReference="6"
+    description="number of outgoing flows"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Integer/>
+  </ScalarVariable>
+  <!-- Index of variable = "131" -->
+  <ScalarVariable
+    name="incubation.num_outflows"
+    valueReference="7"
+    description="number of outgoing flows"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Integer/>
+  </ScalarVariable>
+  <!-- Index of variable = "132" -->
+  <ScalarVariable
+    name="Dead.LOAD_STARTS"
+    valueReference="0"
+    description="Load start value of state"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "133" -->
+  <ScalarVariable
+    name="Dead.SAVE_COMPARISON"
+    valueReference="1"
+    description="Compare final state values with original values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "134" -->
+  <ScalarVariable
+    name="Dead.SAVE_RESULTS"
+    valueReference="2"
+    description="Save final state values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "135" -->
+  <ScalarVariable
+    name="Dead.isDependent"
+    valueReference="3"
+    description="=true, If zero flow is propagated in eqiulibrium through resistors, impedances, reactions, etc."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "136" -->
+  <ScalarVariable
+    name="Exposed.LOAD_STARTS"
+    valueReference="4"
+    description="Load start value of state"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "137" -->
+  <ScalarVariable
+    name="Exposed.SAVE_COMPARISON"
+    valueReference="5"
+    description="Compare final state values with original values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "138" -->
+  <ScalarVariable
+    name="Exposed.SAVE_RESULTS"
+    valueReference="6"
+    description="Save final state values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "139" -->
+  <ScalarVariable
+    name="Exposed.isDependent"
+    valueReference="7"
+    description="=true, If zero flow is propagated in eqiulibrium through resistors, impedances, reactions, etc."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "140" -->
+  <ScalarVariable
+    name="Infectious.LOAD_STARTS"
+    valueReference="8"
+    description="Load start value of state"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "141" -->
+  <ScalarVariable
+    name="Infectious.SAVE_COMPARISON"
+    valueReference="9"
+    description="Compare final state values with original values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "142" -->
+  <ScalarVariable
+    name="Infectious.SAVE_RESULTS"
+    valueReference="10"
+    description="Save final state values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "143" -->
+  <ScalarVariable
+    name="Infectious.isDependent"
+    valueReference="11"
+    description="=true, If zero flow is propagated in eqiulibrium through resistors, impedances, reactions, etc."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "144" -->
+  <ScalarVariable
+    name="Recovered.LOAD_STARTS"
+    valueReference="12"
+    description="Load start value of state"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "145" -->
+  <ScalarVariable
+    name="Recovered.SAVE_COMPARISON"
+    valueReference="13"
+    description="Compare final state values with original values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "146" -->
+  <ScalarVariable
+    name="Recovered.SAVE_RESULTS"
+    valueReference="14"
+    description="Save final state values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "147" -->
+  <ScalarVariable
+    name="Recovered.isDependent"
+    valueReference="15"
+    description="=true, If zero flow is propagated in eqiulibrium through resistors, impedances, reactions, etc."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "148" -->
+  <ScalarVariable
+    name="Sick.LOAD_STARTS"
+    valueReference="16"
+    description="Load start value of state"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "149" -->
+  <ScalarVariable
+    name="Sick.SAVE_COMPARISON"
+    valueReference="17"
+    description="Compare final state values with original values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "150" -->
+  <ScalarVariable
+    name="Sick.SAVE_RESULTS"
+    valueReference="18"
+    description="Save final state values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "151" -->
+  <ScalarVariable
+    name="Sick.isDependent"
+    valueReference="19"
+    description="=true, If zero flow is propagated in eqiulibrium through resistors, impedances, reactions, etc."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "152" -->
+  <ScalarVariable
+    name="Susceptible.LOAD_STARTS"
+    valueReference="20"
+    description="Load start value of state"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "153" -->
+  <ScalarVariable
+    name="Susceptible.SAVE_COMPARISON"
+    valueReference="21"
+    description="Compare final state values with original values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "154" -->
+  <ScalarVariable
+    name="Susceptible.SAVE_RESULTS"
+    valueReference="22"
+    description="Save final state values"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "155" -->
+  <ScalarVariable
+    name="Susceptible.isDependent"
+    valueReference="23"
+    description="=true, If zero flow is propagated in eqiulibrium through resistors, impedances, reactions, etc."
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "156" -->
+  <ScalarVariable
+    name="exposure.useChangePerMemberInput"
+    valueReference="24"
+    description="=true, if real input connector is used instead of parameter LifeTime"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "157" -->
+  <ScalarVariable
+    name="illness.useChangePerMemberInput"
+    valueReference="25"
+    description="=true, if real input connector is used instead of parameter LifeTime"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "158" -->
+  <ScalarVariable
+    name="incubation.useChangePerMemberInput"
+    valueReference="26"
+    description="=true, if real input connector is used instead of parameter LifeTime"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "159" -->
+  <ScalarVariable
+    name="latent.useChangePerMemberInput"
+    valueReference="27"
+    description="=true, if real input connector is used instead of parameter LifeTime"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "160" -->
+  <ScalarVariable
+    name="Dead.stateName"
+    valueReference="0"
+    description="Name in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "161" -->
+  <ScalarVariable
+    name="Dead.storeUnit"
+    valueReference="1"
+    description="Unit in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "162" -->
+  <ScalarVariable
+    name="Exposed.stateName"
+    valueReference="2"
+    description="Name in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "163" -->
+  <ScalarVariable
+    name="Exposed.storeUnit"
+    valueReference="3"
+    description="Unit in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "164" -->
+  <ScalarVariable
+    name="Infectious.stateName"
+    valueReference="4"
+    description="Name in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "165" -->
+  <ScalarVariable
+    name="Infectious.storeUnit"
+    valueReference="5"
+    description="Unit in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "166" -->
+  <ScalarVariable
+    name="Recovered.stateName"
+    valueReference="6"
+    description="Name in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "167" -->
+  <ScalarVariable
+    name="Recovered.storeUnit"
+    valueReference="7"
+    description="Unit in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "168" -->
+  <ScalarVariable
+    name="Sick.stateName"
+    valueReference="8"
+    description="Name in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "169" -->
+  <ScalarVariable
+    name="Sick.storeUnit"
+    valueReference="9"
+    description="Unit in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "170" -->
+  <ScalarVariable
+    name="Susceptible.stateName"
+    valueReference="10"
+    description="Name in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  <!-- Index of variable = "171" -->
+  <ScalarVariable
+    name="Susceptible.storeUnit"
+    valueReference="11"
+    description="Unit in Utilities input/output function"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <String/>
+  </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Derivatives>
+      <Unknown index="7" dependencies="5" dependenciesKind="dependent" />
+      <Unknown index="8" dependencies="2 3 6" dependenciesKind="dependent dependent dependent" />
+      <Unknown index="9" dependencies="2 3" dependenciesKind="dependent dependent" />
+      <Unknown index="10" dependencies="5" dependenciesKind="dependent" />
+      <Unknown index="11" dependencies="3 5" dependenciesKind="dependent dependent" />
+      <Unknown index="12" dependencies="2 3 6" dependenciesKind="dependent dependent dependent" />
+    </Derivatives>
+    <InitialUnknowns>
+      <Unknown index="1" dependencies="" dependenciesKind="" />
+      <Unknown index="2" dependencies="" dependenciesKind="" />
+      <Unknown index="3" dependencies="" dependenciesKind="" />
+      <Unknown index="4" dependencies="" dependenciesKind="" />
+      <Unknown index="5" dependencies="" dependenciesKind="" />
+      <Unknown index="6" dependencies="" dependenciesKind="" />
+      <Unknown index="7" dependencies="77" dependenciesKind="dependent" />
+      <Unknown index="8" dependencies="" dependenciesKind="" />
+      <Unknown index="9" dependencies="80" dependenciesKind="dependent" />
+      <Unknown index="10" dependencies="77" dependenciesKind="dependent" />
+      <Unknown index="11" dependencies="77 80" dependenciesKind="dependent dependent" />
+      <Unknown index="12" dependencies="" dependenciesKind="" />
+      <Unknown index="36" dependencies="" dependenciesKind="" />
+      <Unknown index="37" dependencies="" dependenciesKind="" />
+      <Unknown index="39" dependencies="38" dependenciesKind="dependent" />
+      <Unknown index="42" dependencies="" dependenciesKind="" />
+      <Unknown index="43" dependencies="" dependenciesKind="" />
+      <Unknown index="45" dependencies="44" dependenciesKind="dependent" />
+      <Unknown index="48" dependencies="" dependenciesKind="" />
+      <Unknown index="49" dependencies="" dependenciesKind="" />
+      <Unknown index="51" dependencies="50" dependenciesKind="dependent" />
+      <Unknown index="54" dependencies="" dependenciesKind="" />
+      <Unknown index="55" dependencies="" dependenciesKind="" />
+      <Unknown index="57" dependencies="56" dependenciesKind="dependent" />
+      <Unknown index="60" dependencies="" dependenciesKind="" />
+      <Unknown index="61" dependencies="" dependenciesKind="" />
+      <Unknown index="63" dependencies="62" dependenciesKind="dependent" />
+      <Unknown index="66" dependencies="" dependenciesKind="" />
+      <Unknown index="67" dependencies="" dependenciesKind="" />
+      <Unknown index="69" dependencies="68" dependenciesKind="dependent" />
+      <Unknown index="70" dependencies="85" dependenciesKind="dependent" />
+      <Unknown index="74" dependencies="71" dependenciesKind="dependent" />
+      <Unknown index="75" dependencies="86" dependenciesKind="dependent" />
+      <Unknown index="76" dependencies="84" dependenciesKind="dependent" />
+      <Unknown index="78" dependencies="" dependenciesKind="" />
+      <Unknown index="79" dependencies="86" dependenciesKind="dependent" />
+      <Unknown index="81" dependencies="85" dependenciesKind="dependent" />
+      <Unknown index="83" dependencies="82" dependenciesKind="dependent" />
+      <Unknown index="124" dependencies="" dependenciesKind="" />
+      <Unknown index="125" dependencies="" dependenciesKind="" />
+      <Unknown index="126" dependencies="" dependenciesKind="" />
+      <Unknown index="127" dependencies="" dependenciesKind="" />
+      <Unknown index="128" dependencies="" dependenciesKind="" />
+      <Unknown index="129" dependencies="" dependenciesKind="" />
+      <Unknown index="130" dependencies="" dependenciesKind="" />
+      <Unknown index="131" dependencies="" dependenciesKind="" />
+      <Unknown index="132" dependencies="" dependenciesKind="" />
+      <Unknown index="133" dependencies="" dependenciesKind="" />
+      <Unknown index="134" dependencies="" dependenciesKind="" />
+      <Unknown index="135" dependencies="" dependenciesKind="" />
+      <Unknown index="136" dependencies="" dependenciesKind="" />
+      <Unknown index="137" dependencies="" dependenciesKind="" />
+      <Unknown index="138" dependencies="" dependenciesKind="" />
+      <Unknown index="139" dependencies="" dependenciesKind="" />
+      <Unknown index="140" dependencies="" dependenciesKind="" />
+      <Unknown index="141" dependencies="" dependenciesKind="" />
+      <Unknown index="142" dependencies="" dependenciesKind="" />
+      <Unknown index="143" dependencies="" dependenciesKind="" />
+      <Unknown index="144" dependencies="" dependenciesKind="" />
+      <Unknown index="145" dependencies="" dependenciesKind="" />
+      <Unknown index="146" dependencies="" dependenciesKind="" />
+      <Unknown index="147" dependencies="" dependenciesKind="" />
+      <Unknown index="148" dependencies="" dependenciesKind="" />
+      <Unknown index="149" dependencies="" dependenciesKind="" />
+      <Unknown index="150" dependencies="" dependenciesKind="" />
+      <Unknown index="151" dependencies="" dependenciesKind="" />
+      <Unknown index="152" dependencies="" dependenciesKind="" />
+      <Unknown index="153" dependencies="" dependenciesKind="" />
+      <Unknown index="154" dependencies="" dependenciesKind="" />
+      <Unknown index="155" dependencies="" dependenciesKind="" />
+      <Unknown index="156" dependencies="" dependenciesKind="" />
+      <Unknown index="157" dependencies="" dependenciesKind="" />
+      <Unknown index="158" dependencies="" dependenciesKind="" />
+      <Unknown index="159" dependencies="" dependenciesKind="" />
+      <Unknown index="160" dependencies="" dependenciesKind="" />
+      <Unknown index="161" dependencies="" dependenciesKind="" />
+      <Unknown index="162" dependencies="" dependenciesKind="" />
+      <Unknown index="163" dependencies="" dependenciesKind="" />
+      <Unknown index="164" dependencies="" dependenciesKind="" />
+      <Unknown index="165" dependencies="" dependenciesKind="" />
+      <Unknown index="166" dependencies="" dependenciesKind="" />
+      <Unknown index="167" dependencies="" dependenciesKind="" />
+      <Unknown index="168" dependencies="" dependenciesKind="" />
+      <Unknown index="169" dependencies="" dependenciesKind="" />
+      <Unknown index="170" dependencies="" dependenciesKind="" />
+      <Unknown index="171" dependencies="" dependenciesKind="" />
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>
